@@ -55,23 +55,31 @@ layout:
 		</div>
     </section>
 
-   <script>
-	   moment.locale('de');
-	   interval = moment( "2017-07-06" ).recur().every(2).weeks();
-	   interval.fromDate(new Date());
-	   nextDate = moment(new Date(interval.next(1)));
-	
-	   if (interval.matches(new Date())) {
+   <script type="module">
+	   import * as dateFns from "https://cdn.skypack.dev/date-fns@2.30.0"
+	   import { de } from 'date-fns/locale'
+	   setDefaultOptions({ locale: de })
+
+	   const months = dateFns.eachMonthOfInterval({
+		start: Date.now(),
+		end: dateFns.add(Date.now(),{months: 2})
+	   });
+	   const dates = months.map( months => dateFns.previousThursday(dateFns.lastDayOfMonth(months)));
+	   const dates_with_time = dates.map( dates => dateFns.setSeconds(dateFns.setMinutes(dateFns.setHours(dates, 19),30),0));
+	   nextDate = dates_with_time[0];
+
+	   if (dateFns.isToday(nextDate)) {
 		   nextDateStr = "heute";
 	   } else {
 		
 		   nextDateStr = "";
-		   if (nextDate.diff(moment(), 'day') < 7) {
+		   if (dateFns.differenceInDays(Date.now(),nextDate) < 7) {
 			   nextDateStr += "kommenden ";
 			}
 			
-		   nextDateStr += nextDate.format("dddd") + ", den " + nextDate.format("DD. MMMM");
+		   nextDateStr += dateFns.format(nextDate,"iiii") + ", den " + dateFns.format(nextDate,"DD. MMMM");
 	   }
+	   console.log(nextDateStr);
 	   $('#nextMeetingTime').text(nextDateStr);
   </script>
 
