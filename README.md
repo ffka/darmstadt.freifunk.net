@@ -1,4 +1,11 @@
-FFKA website
+# THIS REPO IS DEPRECTED
+It can now be found at: https://gitlab.karlsruhe.freifunk.net/website/karlsruhe.freifunk.net 
+
+
+
+
+
+FFKA WEBSITE 
 ============================
 [karlsruhe.freifunk.net](https://karlsruhe.freifunk.net)
 
